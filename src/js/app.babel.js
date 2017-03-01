@@ -8,7 +8,7 @@ $(document).ready(() => {
 			return dat
 		}),
 		order: [
-			[3, 'asc']
+			[2, 'asc']
 		],
 		columns: [
 			{ title: 'Font name', data: 'name' },
