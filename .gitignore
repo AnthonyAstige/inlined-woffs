@@ -1,0 +1,5 @@
+*.swp
+Thumbs.db
+build
+.format_failed.json
+.format_checked.json
