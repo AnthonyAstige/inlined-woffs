@@ -1,10 +1,13 @@
 $(document).ready(() => {
-	console.log(fontsData)
-	$('#myTable').DataTable( {
-		data: fontsData,
+	$('#myTable').DataTable({
+		data: _.map(fontsData, (dat) => {
+			dat.size /= 1024
+			return dat
+		}),
 		columns: [
-		        { data: 'name' },
-		        { data: 'size' }
-		    ]
-	} );
+			{ title: 'Font name', data: 'name' },
+			{ title: 'Weight/Style', data: 'weightStyle' },
+			{ title: 'Size [KB]', data: 'size' }
+		]
+	})
 })
