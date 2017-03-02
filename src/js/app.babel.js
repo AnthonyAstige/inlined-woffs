@@ -131,30 +131,43 @@ $(document).ready(() => {
 	/**
 	 * Generate
 	 */
-	$('.js-generate-full-subset').click((ev) => {
+	function generateWoff(opts) {
 		$.post(
 			'https://ttf-to-woff-subset.gomix.me/dreams',
 			{
-				ttfURL: 'https://domain.com/somewhereonmyserver.ttf'
+				ttfURL: opts.ttfURL,
+				glyphs: opts.glyphs
 			},
 			(data) => {
-				console.log(data)
+				const fontName = 'IW'
 				let style = `\
 <style>
 	@font-face {
-		font-family: 'Marck Script';
+		font-family: '${fontName}';
 		font-style: normal;
 		font-weight: 400;
 		src: url('${data}') format('woff');
 	}
+	body {
+		font-family: '${fontName}'
+	}
 </style>`
 				style = htmlEscape(style)
 				$('#inlinedSubsetDialog pre').html(style)
+				$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName)
+				$('#inlinedSubsetDialog .js-glyphs-count').html(opts.glyphs.length)
 				$('#inlinedSubsetDialog').dialog({
 					width: 500,
 					maxHeight: 300
 				})
 			}
 		)
+	}
+	$('.js-generate-full-subset').click((ev) => {
+		generateWoff({
+			parentFontName: 'DuurpyF',
+			ttfURL: 'https://domain.com/somewhereonmyserver.ttf',
+			glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
+		})
 	})
 })
