@@ -45,4 +45,8 @@ table.dataTable th {
 #inlinedSubsetDialog pre {
 	border: 1px solid black;
 	padding: 5px;
+	overflow: auto;
+	white-space: pre;
+	display: block;
+	unicode-bidi: embed;
 }

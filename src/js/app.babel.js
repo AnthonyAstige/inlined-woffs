@@ -1,3 +1,12 @@
+// http://stackoverflow.com/a/7124052
+function htmlEscape(str) {
+	return str
+		.replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+}
 /* global _, fontsData */
 $(document).ready(() => {
 	const sets = [
@@ -123,9 +132,29 @@ $(document).ready(() => {
 	 * Generate
 	 */
 	$('.js-generate-full-subset').click((ev) => {
-		$('#inlinedSubsetDialog').dialog({
-			width: 500,
-			maxHeight: 300
-		})
+		$.post(
+			'https://ttf-to-woff-subset.gomix.me/dreams',
+			{
+				ttfURL: 'https://domain.com/somewhereonmyserver.ttf'
+			},
+			(data) => {
+				console.log(data)
+				let style = `\
+<style>
+	@font-face {
+		font-family: 'Marck Script';
+		font-style: normal;
+		font-weight: 400;
+		src: url('${data}') format('woff');
+	}
+</style>`
+				style = htmlEscape(style)
+				$('#inlinedSubsetDialog pre').html(style)
+				$('#inlinedSubsetDialog').dialog({
+					width: 500,
+					maxHeight: 300
+				})
+			}
+		)
 	})
 })
