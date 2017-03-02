@@ -91,7 +91,9 @@ $(document).ready(() => {
 			<button class="js-generate-the-subset">Generate</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
-				`${ac}<span class="tog${set.inc ? ' inc' : ''}">${glyph}</span> `, '')
+				`${ac}<span data-glyph="${glyph}" class="tog${set.inc ? ' inc' : ''}">\
+					${glyph}\
+				</span> `, '')
 			const ret = `${acc}\
 				<div><h3 class="tog${set.inc ? ' inc' : ''}">${set.title}</h3>\
 					${glyphs}\
@@ -127,10 +129,13 @@ $(document).ready(() => {
 		})
 
 		$('.js-generate-the-subset').click((ev) => {
+			const glyphs = $('.custom-subset-dialog span.tog.inc')
+				.toArray()
+				.reduce((acc, glyph) => acc + glyph.getAttribute('data-glyph'), '')
 			generateWoff({
-				parentFontName: 'DuurpyF',
+				parentFontName: fontName,
 				ttfURL: 'https://domain.com/somewhereonmyserver.ttf',
-				glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
+				glyphs
 			})
 		})
 	}
