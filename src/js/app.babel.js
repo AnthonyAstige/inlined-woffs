@@ -1,64 +1,72 @@
 /* global _, fontsData */
 $(document).ready(() => {
+	const sets = [
+		{
+			title: 'A through Z (uppercase)',
+			glyphs: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+			inc: true
+		},
+		{
+			title: '" " (space)',
+			glyphs: ' ',
+			inc: true
+		},
+		{
+			title: 'a through z (lowercase)',
+			glyphs: 'abcdefghijklmnopqrstuvwxyz'
+		},
+		{
+			title: '0-9 (numbers)',
+			glyphs: '0123456789'
+		},
+		{
+			title: 'Special characters',
+			glyphs: '~`!@#$%^&*()-_=+{}[]\\|;:\'"<,>./?'
+		}
+	]
+
 	/**
 	 * Custom Subset
 	 */
 	function customSubset(event) {
-		const sets = [
-			{
-				title: 'A through Z (uppercase)',
-				glyphs: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-				inc: true
-			},
-			{
-				title: '" " (space)',
-				glyphs: ' ',
-				inc: true
-			},
-			{
-				title: 'a through z (lowercase)',
-				glyphs: 'abcdefghijklmnopqrstuvwxyz'
-			},
-			{
-				title: '0-9 (numbers)',
-				glyphs: '0123456789'
-			},
-			{
-				title: 'Special characters',
-				glyphs: '~`!@#$%^&*()-_=+{}[]\\|;:\'"<,>./?'
-			}
-		]
-
 		const glyphsSelected = sets
 			.filter((set) => set.inc)
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
-		const fontName = 'abba'
+		const fontName = $(event.target).attr('data-font-name')
 		let content = `<h2>\
 				Generate custom subset of ${fontName}\
-				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected\
+				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
 			</h2>\
 			<button>Generate</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
 				`${ac}<span class="tog${set.inc ? ' inc' : ''}">${glyph}</span> `, '')
-			return `<div>\
-					${acc} <h3 class="tog${set.inc ? ' inc' : ''}">${set.title}</h3>\
+			const ret = `${acc}\
+				<div><h3 class="tog${set.inc ? ' inc' : ''}">${set.title}</h3>\
 					${glyphs}\
 				</div>`
+			return ret
 		}, content)
 
-		$('#customSubsetsDialog .custom-subset-dialog')
-			.html(content)
-		$('#customSubsetsDialog')
-			.show()
+		$('#customSubsetsDialog .custom-subset-dialog').html(content)
+		$('#customSubsetsDialog').show()
 
 		$('.custom-subset-dialog .tog').click((ev) => {
-			const target = ev.target
-			if ($(target).hasClass('inc')) {
-				$(target).removeClass('inc')
+			const target = $(ev.target)
+			if (target.hasClass('inc')) {
+				target.removeClass('inc')
 			} else {
-				$(target).addClass('inc')
+				target.addClass('inc')
 			}
+			if (target.is('h3')) {
+				// Spogs = Span Toggles
+				const spogs = target.closest('div').find('span.tog')
+				spogs.removeClass('inc')
+				if (target.hasClass('inc')) {
+					spogs.addClass('inc')
+				}
+			}
+
 			$('.custom-subset-dialog .glyphs-selected').html(
 				$('.custom-subset-dialog span.tog.inc').length
 			)
@@ -70,10 +78,10 @@ $(document).ready(() => {
 	 */
 	function linksRender(data, type, row) {
 		return '' +
-			`<button class="js-generate-full-subset" ref="${row.name}">\
+			`<button class="js-generate-full-subset" data-font-name="${row.name}">\
 				Full Subset\
 			</button>\
-			<button class="js-generate-customer-subset" ref="${row.name}">\
+			<button class="js-generate-customer-subset" data-font-name="${row.name}">\
 				Custom Subset\
 			</button> `
 	}
