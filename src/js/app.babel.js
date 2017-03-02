@@ -1,3 +1,34 @@
+/* global _, fontsData */
+
+/**
+ * Misc data
+ */
+const sets = [
+	{
+		title: 'A through Z (uppercase)',
+		glyphs: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+		inc: true
+	},
+	{
+		title: '" " (space)',
+		glyphs: ' ',
+		inc: true
+	},
+	{
+		title: 'a through z (lowercase)',
+		glyphs: 'abcdefghijklmnopqrstuvwxyz'
+	},
+	{
+		title: '0-9 (numbers)',
+		glyphs: '0123456789'
+	},
+	{
+		title: 'Special characters',
+		glyphs: '~`!@#$%^&*()-_=+{}[]\\|;:\'"<,>./?'
+	}
+]
+
+// Misc helpers
 // http://stackoverflow.com/a/7124052
 function htmlEscape(str) {
 	return str
@@ -7,33 +38,44 @@ function htmlEscape(str) {
 		.replace(/</g, '&lt;')
 		.replace(/>/g, '&gt;')
 }
-/* global _, fontsData */
-$(document).ready(() => {
-	const sets = [
-		{
-			title: 'A through Z (uppercase)',
-			glyphs: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-			inc: true
-		},
-		{
-			title: '" " (space)',
-			glyphs: ' ',
-			inc: true
-		},
-		{
-			title: 'a through z (lowercase)',
-			glyphs: 'abcdefghijklmnopqrstuvwxyz'
-		},
-		{
-			title: '0-9 (numbers)',
-			glyphs: '0123456789'
-		},
-		{
-			title: 'Special characters',
-			glyphs: '~`!@#$%^&*()-_=+{}[]\\|;:\'"<,>./?'
-		}
-	]
 
+/**
+ * Generate
+ */
+function generateWoff(opts) {
+	$.post(
+		'https://ttf-to-woff-subset.gomix.me/dreams',
+		{
+			ttfURL: opts.ttfURL,
+			glyphs: opts.glyphs
+		},
+		(data) => {
+			const fontName = 'IW'
+			let style = `\
+<style>
+@font-face {
+	font-family: '${fontName}';
+	font-style: normal;
+	font-weight: 400;
+	src: url('${data}') format('woff');
+}
+body {
+	font-family: '${fontName}'
+}
+</style>`
+			style = htmlEscape(style)
+			$('#inlinedSubsetDialog pre').html(style)
+			$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName)
+			$('#inlinedSubsetDialog .js-glyphs-count').html(opts.glyphs.length)
+			$('#inlinedSubsetDialog').dialog({
+				width: 500,
+				maxHeight: 300
+			})
+		}
+	)
+}
+
+$(document).ready(() => {
 	/**
 	 * Custom Subset
 	 */
@@ -46,7 +88,7 @@ $(document).ready(() => {
 				Generate custom subset of font '${fontName}'\
 				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
 			</h2>\
-			<button>Generate</button>`
+			<button class="js-generate-the-subset">Generate</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
 				`${ac}<span class="tog${set.inc ? ' inc' : ''}">${glyph}</span> `, '')
@@ -82,6 +124,14 @@ $(document).ready(() => {
 			$('.custom-subset-dialog .glyphs-selected').html(
 				$('.custom-subset-dialog span.tog.inc').length
 			)
+		})
+
+		$('.js-generate-the-subset').click((ev) => {
+			generateWoff({
+				parentFontName: 'DuurpyF',
+				ttfURL: 'https://domain.com/somewhereonmyserver.ttf',
+				glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
+			})
 		})
 	}
 
@@ -131,38 +181,6 @@ $(document).ready(() => {
 	/**
 	 * Generate
 	 */
-	function generateWoff(opts) {
-		$.post(
-			'https://ttf-to-woff-subset.gomix.me/dreams',
-			{
-				ttfURL: opts.ttfURL,
-				glyphs: opts.glyphs
-			},
-			(data) => {
-				const fontName = 'IW'
-				let style = `\
-<style>
-	@font-face {
-		font-family: '${fontName}';
-		font-style: normal;
-		font-weight: 400;
-		src: url('${data}') format('woff');
-	}
-	body {
-		font-family: '${fontName}'
-	}
-</style>`
-				style = htmlEscape(style)
-				$('#inlinedSubsetDialog pre').html(style)
-				$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName)
-				$('#inlinedSubsetDialog .js-glyphs-count').html(opts.glyphs.length)
-				$('#inlinedSubsetDialog').dialog({
-					width: 500,
-					maxHeight: 300
-				})
-			}
-		)
-	}
 	$('.js-generate-full-subset').click((ev) => {
 		generateWoff({
 			parentFontName: 'DuurpyF',
