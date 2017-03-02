@@ -85,10 +85,10 @@ $(document).ready(() => {
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const fontName = $(event.target).attr('data-font-name')
 		let content = `<h2>\
-				Generate custom subset of font '${fontName}'\
+				Choose glyphs from '${fontName}'\
 				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
 			</h2>\
-			<button class="js-generate-the-subset">Generate</button>`
+			<button class="js-generate-the-subset">Generate Derivative Font</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
 				`${ac}<span data-glyph="${glyph}" class="tog${set.inc ? ' inc' : ''}">\
