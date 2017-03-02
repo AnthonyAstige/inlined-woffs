@@ -5,3 +5,49 @@ footer {
 table.dataTable th {
 	text-align: left;
 }
+
+#customSubsetsDialog {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 600px;
+	margin-left: -300px;
+	border: 1px solid black;
+	height: 400px;
+	margin-top: -200px;
+	background: yellow;
+	border-radius: 5px;
+	overflow: auto;
+}
+
+.custom-subset-dialog {
+	padding: 2px;
+}
+
+.custom-subset-dialog h2 {
+	margin-top: 0;
+}
+
+.custom-subset-dialog h3 {
+	clear: both;
+}
+
+.custom-subset-dialog .tog {
+	border: 3px solid grey;
+	color: grey;
+	cursor: pointer;
+	padding: 4px;
+}
+
+.custom-subset-dialog span.tog {
+	width: 20px;
+	height: 20px;
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+.custom-subset-dialog .tog.inc {
+	border: 3px solid black;
+	color: black;
+}
