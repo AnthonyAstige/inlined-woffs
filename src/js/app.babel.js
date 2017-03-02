@@ -34,7 +34,7 @@ $(document).ready(() => {
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const fontName = $(event.target).attr('data-font-name')
 		let content = `<h2>\
-				Generate custom subset of ${fontName}\
+				Generate custom subset of font '${fontName}'\
 				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
 			</h2>\
 			<button>Generate</button>`
@@ -49,7 +49,10 @@ $(document).ready(() => {
 		}, content)
 
 		$('#customSubsetsDialog .custom-subset-dialog').html(content)
-		$('#customSubsetsDialog').show()
+		$('#customSubsetsDialog').dialog({
+			width: 600,
+			maxHeight: 400
+		})
 
 		$('.custom-subset-dialog .tog').click((ev) => {
 			const target = $(ev.target)
