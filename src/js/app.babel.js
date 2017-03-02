@@ -1,7 +1,10 @@
 /* global _, fontsData */
 $(document).ready(() => {
 	function linksRender(data, type, row) {
-		return `<a target="_blank" href="https://fonts.google.com/?query=${row.name}">Search Google Fonts for parent</a> |`
+		return `<button ref="${row.name}">Generate</button>`
+	}
+	function preview(data, type, row) {
+		return 'ABCDE abcde'
 	}
 	function kb(size) {
 		return Math.round(size * 10) / 10
@@ -17,8 +20,9 @@ $(document).ready(() => {
 		columns: [
 			{ title: 'Derive from font', data: 'name' },
 			{ title: 'Weight/Style', data: 'weightStyle', defaultContent: '' },
-			{ title: 'A-Z Size [KB]', data: 'size', render: kb },
-			{ title: 'Full Size [KB]', data: 'size', render: kb }
+			{ title: 'Full Size [KB]', data: 'size', render: kb },
+			{ title: 'Preview', render: preview },
+			{ title: 'Links', render: linksRender, sortable: false }
 		]
 	})
 })
