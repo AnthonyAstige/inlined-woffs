@@ -6,11 +6,11 @@ table.dataTable th {
 	text-align: left;
 }
 
+#inlinedSubsetDialog,
 #customSubsetsDialog {
 	display: none;
 	overflow: auto;
 }
-
 
 .custom-subset-dialog h2 {
 	margin-top: 0;
@@ -37,4 +37,12 @@ table.dataTable th {
 .custom-subset-dialog .tog.inc {
 	border: 3px solid black;
 	color: black;
+}
+
+/**
+ * Inlined
+ */
+#inlinedSubsetDialog pre {
+	border: 1px solid black;
+	padding: 5px;
 }

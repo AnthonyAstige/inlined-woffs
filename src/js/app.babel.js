@@ -118,4 +118,14 @@ $(document).ready(() => {
 	table.on('draw', () => {
 		$('.js-generate-customer-subset').click(customSubset)
 	})
+
+	/**
+	 * Generate
+	 */
+	$('.js-generate-full-subset').click((ev) => {
+		$('#inlinedSubsetDialog').dialog({
+			width: 500,
+			maxHeight: 300
+		})
+	})
 })
