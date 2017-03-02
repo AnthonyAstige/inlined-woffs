@@ -1,3 +1,7 @@
 footer {
 	margin-top: 20px;
 }
+
+table.dataTable th {
+	text-align: left;
+}
