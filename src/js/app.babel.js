@@ -44,7 +44,7 @@ function htmlEscape(str) {
  */
 function generateWoff(opts) {
 	$.post(
-		'https://ttf-to-woff-subset.gomix.me/dreams',
+		'https://ttf-to-woff-subset.gomix.me/base64',
 		{
 			ttfURL: opts.ttfURL,
 			glyphs: opts.glyphs
