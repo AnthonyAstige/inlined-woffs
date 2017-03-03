@@ -50,17 +50,18 @@ function generateWoff(opts) {
 			glyphs: opts.glyphs
 		},
 		(data) => {
-			const fontName = 'IW'
+			const fontName = 'Custom Subsetted Inlined Woff'
 			let style = `\
 <style>
 @font-face {
+	/* Font based on: ${opts.parentFontName} */
 	font-family: '${fontName}';
 	font-style: normal;
 	font-weight: 400;
 	src: url('${data}') format('woff');
 }
 body {
-	font-family: '${fontName}'
+	font-family: '${fontName}';
 }
 </style>`
 			style = htmlEscape(style)
