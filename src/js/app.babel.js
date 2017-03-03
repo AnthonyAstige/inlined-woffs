@@ -166,8 +166,36 @@ $(document).ready(() => {
 				Custom Subset\
 			</button> `
 	}
-	function preview(data, type, row) {
-		return 'ABCDE abcde'
+	function fontClass(rowData) {
+		return `font-dynamic-inline-woff-${rowData.name}-${rowData.weightStyle}`
+	}
+	const loadedFonts = {}
+	function loadFont(rowData) {
+		const name = rowData.name
+		const weightStyle = rowData.weightStyle
+		if (loadedFonts[`${name}${weightStyle}`]) {
+			return
+		}
+		$('head')
+			.append(`<style>\
+@font-face {
+	font-family: 'Dynamic Inline Woff ${name} ${weightStyle}';
+	font-style: normal;
+	font-weight: 400;
+	src: url(/fonts/${rowData.fp}.woff) format('woff');
+}
+.${fontClass(rowData)} {
+	font-family: 'Dynamic Inline Woff ${name} ${weightStyle}';
+	font-style: normal;
+	font-weight: 400 !important;
+}
+\
+</style>`)
+		loadedFonts[`${name}${weightStyle}`] = true
+	}
+
+	function preview(data, type, rowData) {
+		return `<span class="${fontClass(rowData)}">ABCDE abcde 01234 ~!@#$</span>`
 	}
 	function kb(size) {
 		return Math.round(size * 10) / 10
@@ -186,7 +214,10 @@ $(document).ready(() => {
 			{ title: 'Full Subset Size [KB]', data: 'size', render: kb },
 			{ title: 'Preview', render: preview },
 			{ title: 'Generate inlined font', render: linksRender, sortable: false }
-		]
+		],
+		rowCallback: (rowDom, rowData, index) => {
+			loadFont(rowData)
+		}
 	})
 
 	/**
