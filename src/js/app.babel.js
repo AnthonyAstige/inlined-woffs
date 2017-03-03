@@ -60,8 +60,10 @@ function generateWoff(opts) {
 	font-weight: 400;
 	src: url('${data}') format('woff');
 }
-body {
+*, body {
+	/* Hack all elements same font & weight stop browser from funky extrapolations */
 	font-family: '${fontName}';
+	font-weight: 400 !important;
 }
 </style>`
 			style = htmlEscape(style)
