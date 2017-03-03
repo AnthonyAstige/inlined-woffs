@@ -145,7 +145,9 @@ $(document).ready(() => {
 	 */
 	function linksRender(data, type, row) {
 		return '' +
-			`<button class="js-generate-full-subset" data-font-name="${row.name}">\
+			`<button class="js-generate-full-subset"\
+				data-font-name="${row.name}"\
+				data-font-fp="${row.fp}">\
 				Full Subset\
 			</button>\
 			<button class="js-generate-customer-subset" data-font-name="${row.name}">\
@@ -187,9 +189,12 @@ $(document).ready(() => {
 	 * Generate
 	 */
 	$('.js-generate-full-subset').click((ev) => {
+		// Figure out TTF URL
+		const fp = $(ev.target).attr('data-font-fp')
+		const origin = window.location.origin
+		const ttfURL = `${origin}/fonts/${fp}.ttf`
 		generateWoff({
-			parentFontName: 'DuurpyF',
-			ttfURL: 'https://domain.com/somewhereonmyserver.ttf',
+			ttfURL,
 			glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
 		})
 	})
