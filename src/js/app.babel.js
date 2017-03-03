@@ -83,10 +83,10 @@ $(document).ready(() => {
 		const glyphsSelected = sets
 			.filter((set) => set.inc)
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
-		const fontName = $(event.target).attr('data-font-name')
+		const parentFontName = $(event.target).attr('data-font-name')
 		const fp = $(event.target).attr('data-font-fp')
 		let content = `<h2>\
-				Choose glyphs from '${fontName}'\
+				Choose glyphs from '${parentFontName}'\
 				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
 			</h2>\
 			<button class="js-generate-the-subset">Generate Derivative Font</button>`
@@ -141,7 +141,7 @@ $(document).ready(() => {
 				.reduce((acc, glyph) => acc + glyph.getAttribute('data-glyph'), '')
 
 			// Generate that woff and do stuff with it
-			generateWoff({ ttfURL, glyphs })
+			generateWoff({ ttfURL, glyphs, parentFontName })
 		})
 	}
 
@@ -196,11 +196,14 @@ $(document).ready(() => {
 	 * Generate
 	 */
 	$('.js-generate-full-subset').click((ev) => {
+		// Figure out parent font name
+		const parentFontName = $(ev.target).attr('data-font-name')
 		// Figure out TTF URL
 		const fp = $(ev.target).attr('data-font-fp')
 		const origin = window.location.origin
 		const ttfURL = `${origin}/fonts/${fp}.ttf`
 		generateWoff({
+			parentFontName,
 			ttfURL,
 			glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
 		})
