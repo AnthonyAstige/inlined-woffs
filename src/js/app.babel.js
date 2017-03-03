@@ -84,6 +84,7 @@ $(document).ready(() => {
 			.filter((set) => set.inc)
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const fontName = $(event.target).attr('data-font-name')
+		const fp = $(event.target).attr('data-font-fp')
 		let content = `<h2>\
 				Choose glyphs from '${fontName}'\
 				(<span class="glyphs-selected">${glyphsSelected}</span> glyphs selected)\
@@ -129,14 +130,18 @@ $(document).ready(() => {
 		})
 
 		$('.js-generate-the-subset').click((ev) => {
+			// TODO: Abstract this, re-use it as duped
+			// Figure out TTF URL
+			const origin = window.location.origin
+			const ttfURL = `${origin}/fonts/${fp}.ttf`
+
+			// Figure out glyphs to include
 			const glyphs = $('.custom-subset-dialog span.tog.inc')
 				.toArray()
 				.reduce((acc, glyph) => acc + glyph.getAttribute('data-glyph'), '')
-			generateWoff({
-				parentFontName: fontName,
-				ttfURL: 'https://domain.com/somewhereonmyserver.ttf',
-				glyphs
-			})
+
+			// Generate that woff and do stuff with it
+			generateWoff({ ttfURL, glyphs })
 		})
 	}
 
@@ -150,7 +155,9 @@ $(document).ready(() => {
 				data-font-fp="${row.fp}">\
 				Full Subset\
 			</button>\
-			<button class="js-generate-customer-subset" data-font-name="${row.name}">\
+			<button class="js-generate-customer-subset"
+				data-font-name="${row.name}"\
+				data-font-fp="${row.fp}">\
 				Custom Subset\
 			</button> `
 	}
