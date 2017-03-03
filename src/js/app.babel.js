@@ -1,3 +1,5 @@
+// TODO: Refactor all the things
+
 /* global _, fontsData */
 
 /**
