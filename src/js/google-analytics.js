@@ -15,16 +15,16 @@ function sendToGAIfOkay() {
 	}
 
 	if (Cookies.get('GADisabled')) {
-		console.log('Not sending to GA: GADisabled cookie found')
+		// console.log('Not sending to GA: GADisabled cookie found')
 		return
 	}
 
 	if (-1 === window.location.hostname.search('inlined-woffs.zinid.com')) {
-		console.log('Not sending to GA: Host name not matched')
+		// console.log('Not sending to GA: Host name not matched')
 		return
 	}
 
-	console.log('Sending GA...')
+	// console.log('Sending GA...')
 	sendToGA()
 }
 
