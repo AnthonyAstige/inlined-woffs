@@ -1,6 +1,5 @@
 ---
 files:
 - css/jquery.dataTables.css
-- css/app.css
 - css/jquery-ui.min.css
 ---
