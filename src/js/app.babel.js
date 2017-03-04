@@ -2,11 +2,17 @@
 
 /* global _, fontsData */
 
+/**
+ * Misc helpers
+ */
 // Don't make too long of font-family names of IE won't like it
 // * http://stackoverflow.com/a/21535758
 // Don't make font name a derivative of original (OFL requirement)
 function fontFamily() {
 	return (0 | Math.random() * 9e6).toString(36) // eslint-disable-line no-bitwise
+}
+function fontClass(rowData) {
+	return `font-dynamic-inline-woff-${rowData.name}-${rowData.weightStyle}`
 }
 
 /**
@@ -105,6 +111,10 @@ $(document).ready(() => {
 			.filter((set) => set.inc)
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const parentFontName = $(event.target).attr('data-font-name')
+		const fontCls = fontClass({
+			name: $(event.target).attr('data-font-name'),
+			weightStyle: $(event.target).attr('data-font-weightStyle')
+		})
 		const fp = $(event.target).attr('data-font-fp')
 		let content = `<h2>CHOOSE GLYPHS FROM ${parentFontName.toUpperCase()}</h2>\
 			<span class="glyphs-selected">${glyphsSelected}</span> GLYPHS SELECTED<br />\
@@ -112,7 +122,8 @@ $(document).ready(() => {
 			<button class="js-generate-the-subset">Generate Derivative Font</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
-				`${ac}<span data-glyph="${glyph}" class="tog${set.inc ? ' inc' : ''}">\
+				`${ac}<span data-glyph="${glyph}" class="tog${set.inc ? ' inc' : ''}\
+					${fontCls}">\
 					${glyph}\
 				</span> `, '')
 			const ret = `${acc}\
@@ -187,12 +198,10 @@ $(document).ready(() => {
 			</button>\
 			<button class="js-generate-customer-subset"
 				data-font-name="${row.name}"\
+				data-font-weightStyle="${row.weightStyle}"\
 				data-font-fp="${row.fp}">\
 				Custom Subset\
 			</button> `
-	}
-	function fontClass(rowData) {
-		return `font-dynamic-inline-woff-${rowData.name}-${rowData.weightStyle}`
 	}
 	const loadedFonts = {}
 	function loadFont(rowData) {
