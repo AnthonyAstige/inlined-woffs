@@ -224,7 +224,7 @@ $(document).ready(() => {
 		columns: [
 			{ title: 'Derive from font', data: 'name' },
 			{ title: 'Weight/Style', data: 'weightStyle', defaultContent: '' },
-			{ title: 'Gzip size of full fubset [KB]', data: 'size', render: kb },
+			{ title: 'Gzip size of full subset [KB]', data: 'size', render: kb },
 			{ title: 'Preview', render: preview },
 			{ title: 'Generate inlined woff', render: linksRender, sortable: false }
 		],
