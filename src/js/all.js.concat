@@ -5,6 +5,7 @@ files:
  - js/jquery.dataTables-1.10.13.js
  - js/jquery-ui.min.js
  - js/lodash-4.17.4.min.js
+ - js/selectable-pres.js
  - js/app.babel.js
 ---
 
