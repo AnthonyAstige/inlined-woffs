@@ -56,16 +56,16 @@ function generateWoff(opts) {
 			let style = `\
 <style>
 @font-face {
-	/* Font based on: ${opts.parentFontName} */
-	font-family: '${fontName}';
-	font-style: normal;
-	font-weight: 400;
-	src: url('${data}') format('woff');
+  /* Font based on: ${opts.parentFontName} */
+  font-family: '${fontName}';
+  font-style: normal;
+  font-weight: 400;
+  src: url('${data}') format('woff');
 }
 *, body {
-	/* Hack all elements same font & weight stop browser from funky extrapolations */
-	font-family: '${fontName}';
-	font-weight: 400 !important;
+  /* Hack all elements same font & weight stop browser from funky extrapolations */
+  font-family: '${fontName}';
+  font-weight: 400 !important;
 }
 </style>`
 			style = htmlEscape(style)
