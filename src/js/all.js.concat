@@ -1,5 +1,6 @@
 ---
 files:
+ - js/repeat.js
  - js/fonts-data.js
  - js/jquery-3.1.1.min.js
  - js/jquery.dataTables-1.10.13.js

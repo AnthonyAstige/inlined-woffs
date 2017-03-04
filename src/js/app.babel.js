@@ -2,6 +2,21 @@
 
 /* global _, fontsData */
 
+// Note: Don't make too long of font-family names of IE won't like it
+// http://stackoverflow.com/a/21535758
+function fontFamily(name, length = 20) {
+	const lcName = name.toLowerCase().replace(/ /g, '')
+	let ret = ''
+	if (lcName.length < length) {
+		ret = lcName.repeat(length)
+	} else {
+		for (let ii = 0; ii < lcName.length; ii += (lcName.length / length)) {
+			ret += lcName[Math.ceil(ii)]
+		}
+	}
+	return ret.substr(0, length)
+}
+
 /**
  * Misc data
  */
@@ -52,19 +67,20 @@ function generateWoff(opts) {
 			glyphs: opts.glyphs
 		},
 		(data) => {
-			const fontName = 'Custom Subsetted Inlined Woff'
+			// TODO: Add in weightStyle to this
+			const fontFam = fontFamily(opts.parentFontName)
 			let style = `\
 <style>
 @font-face {
   /* Font based on: ${opts.parentFontName} */
-  font-family: '${fontName}';
+  font-family: '${fontFam}';
   font-style: normal;
   font-weight: 400;
   src: url('${data}') format('woff');
 }
 *, body {
   /* Hack all elements same font & weight stop browser from funky extrapolations */
-  font-family: '${fontName}';
+  font-family: '${fontFam}';
   font-weight: 400 !important;
 }
 </style>`
@@ -181,16 +197,17 @@ $(document).ready(() => {
 		if (loadedFonts[`${name}${weightStyle}`]) {
 			return
 		}
+		const fontFam = fontFamily(`${name} ${weightStyle}`)
 		$('head')
 			.append(`<style>\
 @font-face {
-	font-family: 'Dynamic Inline Woff ${name} ${weightStyle}';
+	font-family: '${fontFam}';
 	font-style: normal;
 	font-weight: 400;
 	src: url(/fonts/${rowData.fp}.woff) format('woff');
 }
 .${fontClass(rowData)} {
-	font-family: 'Dynamic Inline Woff ${name} ${weightStyle}';
+	font-family: '${fontFam}';
 	font-style: normal;
 	font-weight: 400 !important;
 }
