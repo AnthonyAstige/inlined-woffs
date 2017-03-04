@@ -2,19 +2,11 @@
 
 /* global _, fontsData */
 
-// Note: Don't make too long of font-family names of IE won't like it
-// http://stackoverflow.com/a/21535758
-function fontFamily(name, length = 20) {
-	const lcName = name.toLowerCase().replace(/ /g, '')
-	let ret = ''
-	if (lcName.length < length) {
-		ret = lcName.repeat(length)
-	} else {
-		for (let ii = 0; ii < lcName.length; ii += (lcName.length / length)) {
-			ret += lcName[Math.ceil(ii)]
-		}
-	}
-	return ret.substr(0, length)
+// Don't make too long of font-family names of IE won't like it
+// * http://stackoverflow.com/a/21535758
+// Don't make font name a derivative of original (OFL requirement)
+function fontFamily() {
+	return (0 | Math.random() * 9e6).toString(36) // eslint-disable-line no-bitwise
 }
 
 /**
