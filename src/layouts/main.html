@@ -5,7 +5,6 @@
 		{{> inlinedWoffDefault}}
 		{{> inlinedWoffHeaders}}
 		<link rel="stylesheet" type="text/css" href="css/above.css" />
-		<link rel="stylesheet" type="text/css" href="css/below.css" />
 		<script type="text/javascript" src="/js/all.js" async></script>
 	</head>
 	<body>
@@ -15,5 +14,8 @@
 			<hr />
 			{{> footer}}
 		</footer>
+
+		<!-- Hack to load below the fold asyncish, I don't care to do this 100% right for this little hack site. Hopefully this kinda works on popular dev browsers -->
+		<link rel="stylesheet" type="text/css" href="css/below.css" />
 	</body>
 </html>
