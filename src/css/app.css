@@ -40,6 +40,13 @@ table.dataTable th {
 }
 
 /**
+ * Fixed width font for places we copy code from, good it's familiar looking and not custom too
+ */
+pre {
+	font-family: monospace;
+}
+
+/**
  * Inlined
  */
 #inlinedSubsetDialog pre {
