@@ -4,8 +4,9 @@
 		<title>Inlined woffs: {{layoutTitle}}</title>
 		{{> inlinedWoffDefault}}
 		{{> inlinedWoffHeaders}}
-		<script type="text/javascript" src="/js/all.js" async></script>
 		{{> inlinedCss}}
+		<script type="text/javascript" src="/js/all.js" async></script>
+		<link rel="preload" href="css/below.css" as="style" onload="this.rel='stylesheet'" />
 	</head>
 	<body>
 		<h1>{{layoutTitle}}</h1>
@@ -14,8 +15,5 @@
 			<hr />
 			{{> footer}}
 		</footer>
-
-		<!-- Hack to load below the fold asyncish, I don't care to do this 100% right for this little hack site. Hopefully this kinda works on popular dev browsers -->
-		<link rel="stylesheet" type="text/css" href="css/below.css" />
 	</body>
 </html>
