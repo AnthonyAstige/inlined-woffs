@@ -128,7 +128,7 @@ $(document).ready(() => {
 					${glyph}\
 				</span> `, '')
 			const ret = `${acc}\
-				<div><h3 class="tog${set.inc ? ' inc' : ''}">${set.title}</h3>\
+				<div><div class="header tog${set.inc ? ' inc' : ''}">${set.title}</div>\
 					${glyphs}\
 				</div>`
 			return ret
@@ -147,9 +147,12 @@ $(document).ready(() => {
 			} else {
 				target.addClass('inc')
 			}
-			if (target.is('h3')) {
+			if (target.is('div')) {
 				// Spogs = Span Toggles
-				const spogs = target.closest('div').find('span.tog')
+				const spogs = target
+					.parent()
+					.closest('div')
+					.find('span.tog')
 				spogs.removeClass('inc')
 				if (target.hasClass('inc')) {
 					spogs.addClass('inc')
