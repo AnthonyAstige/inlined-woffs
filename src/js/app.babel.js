@@ -70,7 +70,7 @@ function generateWoff(opts) {
 			let style = `\
 <style>
 @font-face {
-  /* Font based on: ${opts.parentFontName} */
+  /* Font based on: ${opts.parentFontName} (Weight/Style: ${opts.parentFontWeightStyle})*/
   font-family: '${fontFam}';
   font-style: normal;
   font-weight: 400;
@@ -111,6 +111,7 @@ $(document).ready(() => {
 			.filter((set) => set.inc)
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const parentFontName = $(event.target).attr('data-font-name')
+		const parentFontWeightStyle = $(event.target).attr('data-font-weightStyle')
 		const fontCls = fontClass({
 			name: $(event.target).attr('data-font-name'),
 			weightStyle: $(event.target).attr('data-font-weightStyle')
@@ -180,6 +181,7 @@ $(document).ready(() => {
 				ttfURL,
 				glyphs,
 				parentFontName,
+				parentFontWeightStyle,
 				reEnable: $(ev.target),
 				reEnableText: 'Generate Derivative Font'
 			})
@@ -193,6 +195,7 @@ $(document).ready(() => {
 		return '' +
 			`<button class="js-generate-full-subset"\
 				data-font-name="${row.name}"\
+				data-font-weightStyle="${row.weightStyle}"\
 				data-font-fp="${row.fp}">\
 				Full Subset\
 			</button>\
@@ -269,12 +272,15 @@ $(document).ready(() => {
 						.prop('disabled', true)
 					// Figure out parent font name
 					const parentFontName = $(ev.target).attr('data-font-name')
+					const parentFontWeightStyle = $(ev.target)
+						.attr('data-font-weightStyle')
 					// Figure out TTF URL
 					const fp = $(ev.target).attr('data-font-fp')
 					const origin = window.location.origin
 					const ttfURL = `${origin}/fonts/${fp}.ttf`
 					generateWoff({
 						parentFontName,
+						parentFontWeightStyle,
 						ttfURL,
 						glyphs: sets.reduce((acc, set) => acc + set.glyphs, ''),
 						reEnable: $(ev.target),
