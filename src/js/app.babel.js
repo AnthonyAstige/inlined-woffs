@@ -103,10 +103,9 @@ $(document).ready(() => {
 			.reduce((acc, set) => acc + set.glyphs.length, 0)
 		const parentFontName = $(event.target).attr('data-font-name')
 		const fp = $(event.target).attr('data-font-fp')
-		let content = `<h2>\
-				CHOOSE GLYPHS FROM '${parentFontName.toUpperCase()}'\
-				(<span class="glyphs-selected">${glyphsSelected}</span> GLYPHS SELECTED)\
-			</h2>\
+		let content = `<h2>CHOOSE GLYPHS FROM ${parentFontName.toUpperCase()}</h2>\
+			<span class="glyphs-selected">${glyphsSelected}</span> GLYPHS SELECTED<br />\
+			<br />\
 			<button class="js-generate-the-subset">Generate Derivative Font</button>`
 		content = sets.reduce((acc, set) => {
 			const glyphs = set.glyphs.split('').reduce((ac, glyph) =>
