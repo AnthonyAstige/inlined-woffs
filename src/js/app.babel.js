@@ -70,7 +70,9 @@ function generateWoff(opts) {
 </style>`
 			style = htmlEscape(style)
 			$('#inlinedSubsetDialog pre').html(style)
-			$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName.toUpperCase())
+			$('#inlinedSubsetDialog .js-parent-font-name').html(
+				opts.parentFontName.toUpperCase()
+			)
 			$('#inlinedSubsetDialog .js-glyphs-count').html(opts.glyphs.length)
 			$('#inlinedSubsetDialog .js-byte-size').html(
 				Math.round(10 * data.length / 1024) / 10
@@ -214,7 +216,7 @@ $(document).ready(() => {
 		columns: [
 			{ title: 'Derive from font', data: 'name' },
 			{ title: 'Weight/Style', data: 'weightStyle', defaultContent: '' },
-			{ title: 'Full Subset Size [KB]', data: 'size', render: kb },
+			{ title: 'Gzip size of full fubset [KB]', data: 'size', render: kb },
 			{ title: 'Preview', render: preview },
 			{ title: 'Generate inlined font', render: linksRender, sortable: false }
 		],
