@@ -205,7 +205,7 @@ $(document).ready(() => {
 	function kb(size) {
 		return Math.round(size * 10) / 10
 	}
-	const table = $('#myTable').DataTable({ // eslint-disable-line new-cap
+	$('#myTable').DataTable({ // eslint-disable-line new-cap
 		data: _.map(fontsData, (dat) => {
 			dat.size /= 1024
 			return dat
@@ -222,31 +222,31 @@ $(document).ready(() => {
 		],
 		rowCallback: (rowDom, rowData, index) => {
 			loadFont(rowData)
+
+			/**
+			 * Connect DataTable to Custom Subset generaiton
+			 */
+			$(rowDom).find('.js-generate-customer-subset')
+				.click(customSubset)
+
+			/**
+			 * Generate
+			 */
+			$(rowDom).find('.js-generate-full-subset')
+				.click((ev) => {
+					// Figure out parent font name
+					const parentFontName = $(ev.target).attr('data-font-name')
+					// Figure out TTF URL
+					const fp = $(ev.target).attr('data-font-fp')
+					const origin = window.location.origin
+					const ttfURL = `${origin}/fonts/${fp}.ttf`
+					generateWoff({
+						parentFontName,
+						ttfURL,
+						glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
+					})
+				}
+			)
 		}
-	})
-
-	/**
-	 * Connect DataTable to Custom Subset generaiton
-	 */
-	$('.js-generate-customer-subset').click(customSubset)
-	table.on('draw', () => {
-		$('.js-generate-customer-subset').click(customSubset)
-	})
-
-	/**
-	 * Generate
-	 */
-	$('.js-generate-full-subset').click((ev) => {
-		// Figure out parent font name
-		const parentFontName = $(ev.target).attr('data-font-name')
-		// Figure out TTF URL
-		const fp = $(ev.target).attr('data-font-fp')
-		const origin = window.location.origin
-		const ttfURL = `${origin}/fonts/${fp}.ttf`
-		generateWoff({
-			parentFontName,
-			ttfURL,
-			glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
-		})
 	})
 })
