@@ -200,7 +200,7 @@ $(document).ready(() => {
 	}
 
 	function preview(data, type, rowData) {
-		return `<span class="${fontClass(rowData)}">ABCDE abcde 01234 ~!@#$</span>`
+		return `<span class="${fontClass(rowData)}">ABC abc 012 ~!@</span>`
 	}
 	function kb(size) {
 		return Math.round(size * 10) / 10
