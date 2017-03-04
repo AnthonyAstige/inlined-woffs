@@ -4,13 +4,13 @@
 			"exceptions": ["OFL"]
 		},
 		"metalsmith-sitemap": {
-			"hostname": "http://inlined-woffs.tools.zinid.com"
+			"hostname": "http://inlined-woffs.zinid.com"
 		},
 		"metalsmith-robots": {
 			"useragent": "*",
 			"disallow": "",
 			"allow": [],
-			"sitemap": "http://inlined-woffs.tools.zinid.com/sitemap.xml"
+			"sitemap": "http://inlined-woffs.zinid.com/sitemap.xml"
 		}
 	},
 	"ignore": []
