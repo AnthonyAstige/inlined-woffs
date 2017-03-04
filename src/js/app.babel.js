@@ -70,8 +70,11 @@ function generateWoff(opts) {
 </style>`
 			style = htmlEscape(style)
 			$('#inlinedSubsetDialog pre').html(style)
-			$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName)
+			$('#inlinedSubsetDialog .js-parent-font-name').html(opts.parentFontName.toUpperCase())
 			$('#inlinedSubsetDialog .js-glyphs-count').html(opts.glyphs.length)
+			$('#inlinedSubsetDialog .js-byte-size').html(
+				Math.round(10 * data.length / 1024) / 10
+			)
 			$('#inlinedSubsetDialog').dialog({
 				width: 500,
 				maxHeight: 300
