@@ -89,6 +89,9 @@ function generateWoff(opts) {
 				width: 500,
 				maxHeight: 300
 			})
+			$(opts.reEnable)
+				.text(opts.reEnableText)
+				.prop('disabled', false)
 		}
 	)
 }
@@ -147,6 +150,10 @@ $(document).ready(() => {
 		})
 
 		$('.js-generate-the-subset').click((ev) => {
+			$(ev.target)
+				.text('Loading...')
+				.prop('disabled', true)
+
 			// TODO: Abstract this, re-use it as duped
 			// Figure out TTF URL
 			const origin = window.location.origin
@@ -158,7 +165,13 @@ $(document).ready(() => {
 				.reduce((acc, glyph) => acc + glyph.getAttribute('data-glyph'), '')
 
 			// Generate that woff and do stuff with it
-			generateWoff({ ttfURL, glyphs, parentFontName })
+			generateWoff({
+				ttfURL,
+				glyphs,
+				parentFontName,
+				reEnable: $(ev.target),
+				reEnableText: 'Generate Derivative Font'
+			})
 		})
 	}
 
@@ -242,6 +255,9 @@ $(document).ready(() => {
 			 */
 			$(rowDom).find('.js-generate-full-subset')
 				.click((ev) => {
+					$(ev.target)
+						.text('Loading...')
+						.prop('disabled', true)
 					// Figure out parent font name
 					const parentFontName = $(ev.target).attr('data-font-name')
 					// Figure out TTF URL
@@ -251,7 +267,9 @@ $(document).ready(() => {
 					generateWoff({
 						parentFontName,
 						ttfURL,
-						glyphs: sets.reduce((acc, set) => acc + set.glyphs, '')
+						glyphs: sets.reduce((acc, set) => acc + set.glyphs, ''),
+						reEnable: $(ev.target),
+						reEnableText: 'Full Subset'
 					})
 				}
 			)
