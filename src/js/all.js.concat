@@ -10,5 +10,7 @@ files:
  - js/lodash-4.17.4.min.js
  - js/selectable-pres.js
  - js/app.babel.js
+ - js/js.cookie.min.js
+ - js/google-analytics.js
 ---
 
