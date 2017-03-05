@@ -1,7 +1,7 @@
 {
 	"plugins": {
 		"metalsmith-spellcheck": {
-			"exceptions": ["OFL"]
+			"exceptions": ["OFL", "Astige"]
 		},
 		"metalsmith-sitemap": {
 			"hostname": "http://inlined-woffs.zinid.com"
