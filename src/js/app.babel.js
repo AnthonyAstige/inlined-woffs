@@ -59,7 +59,7 @@ function htmlEscape(str) {
  */
 function generateWoff(opts) {
 	$.post(
-		'https://ttf-to-woff-subset.gomix.me/base64',
+		'https://ttf-to-woff-subset.glitch.me/base64',
 		{
 			ttfURL: opts.ttfURL,
 			glyphs: opts.glyphs
