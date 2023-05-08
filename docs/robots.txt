@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: http://inlined-woffs.zinid.com/sitemap.xml
